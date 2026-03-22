@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Marco Aurélio — Data Scientist & Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #050d1a;
+  --bg2: #071226;
+  --bg3: #0a1a35;
+  --border: rgba(0,180,255,0.13);
+  --cyan: #00c8ff;
+  --cyan2: #0095cc;
+  --white: #e8f4ff;
+  --muted: #5a7a99;
+  --card: rgba(7,18,38,0.85);
+  --nav-w: 230px;
+  --font-mono: 'Space Mono', monospace;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,200,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,255,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ══════════ SIDEBAR ══════════ */
+#sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--nav-w); height: 100vh;
+  background: rgba(5,13,26,0.97);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  padding: 28px 0 24px;
+  z-index: 100;
+  backdrop-filter: blur(14px);
+}
+.sidebar-brand {
+  padding: 0 22px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-photo {
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  border: 2px solid var(--cyan);
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 14px;
+  box-shadow: 0 0 22px rgba(0,200,255,0.3);
+}
+.sidebar-name {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 800;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 3px;
+}
+.sidebar-role {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 1.5px;
+  color: var(--cyan); text-transform: uppercase;
+  text-align: center;
+}
+nav { flex: 1; padding: 16px 0; display: flex; flex-direction: column; gap: 1px; }
+.nav-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 22px;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); cursor: pointer;
+  transition: all 0.2s;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+}
+.nav-item:hover, .nav-item.active {
+  color: var(--cyan); border-left-color: var(--cyan);
+  background: rgba(0,200,255,0.05);
+}
+.nav-item svg { opacity: 0.65; flex-shrink: 0; }
+.nav-item:hover svg, .nav-item.active svg { opacity: 1; }
+.sidebar-footer {
+  padding: 16px 22px 0;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 14px; align-items: center; justify-content: center;
+}
+.sidebar-footer a { color: var(--muted); transition: color 0.2s; text-decoration: none; }
+.sidebar-footer a:hover { color: var(--cyan); }
+
+/* Lang */
+.lang-switch {
+  position: fixed; top: 16px; right: 20px;
+  display: flex; gap: 4px; z-index: 200;
+}
+.lang-btn {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px;
+  padding: 4px 9px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); cursor: pointer; transition: all 0.2s;
+}
+.lang-btn:hover { color: var(--cyan); border-color: var(--cyan); }
+.lang-btn.active { background: var(--cyan); color: var(--bg); border-color: var(--cyan); font-weight: 700; }
+
+/* ══════════ MAIN ══════════ */
+main { margin-left: var(--nav-w); position: relative; z-index: 1; }
+section {
+  min-height: 100vh; padding: 70px 60px 70px 68px;
+  display: flex; flex-direction: column; justify-content: center;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ══════════ HERO ══════════ */
+#inicio { position: relative; overflow: hidden; }
+#inicio::after {
+  content: ''; position: absolute; top: -100px; right: -100px;
+  width: 450px; height: 450px;
+  background: radial-gradient(circle, rgba(0,200,255,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 3px; color: var(--cyan); text-transform: uppercase;
+  margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before { content: '//'; opacity: 0.5; }
+
+h1.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(48px,5.5vw,80px);
+  font-weight: 800; line-height: 1.0;
+  letter-spacing: -2px; color: var(--white); margin-bottom: 6px;
+  min-height: 1.1em;
+}
+h1.hero-name .typed-cursor { color: var(--cyan); }
+.hero-title {
+  font-family: var(--font-display); font-size: clamp(16px,1.8vw,22px);
+  font-weight: 600; color: var(--muted); margin-bottom: 24px;
+}
+.hero-desc {
+  max-width: 540px; color: rgba(232,244,255,0.7);
+  font-size: 15px; line-height: 1.85; margin-bottom: 36px;
+}
+.badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+.badge {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.5px;
+  padding: 5px 12px; border: 1px solid rgba(0,200,255,0.28);
+  color: rgba(0,200,255,0.8); background: rgba(0,200,255,0.04);
+  transition: all 0.2s; cursor: default;
+}
+.badge:hover { border-color: var(--cyan); background: rgba(0,200,255,0.1); color: var(--cyan); }
+.badge.hl { border-color: var(--cyan); background: rgba(0,200,255,0.09); color: var(--cyan); }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px;
+  text-transform: uppercase; padding: 11px 26px; cursor: pointer;
+  text-decoration: none; transition: all 0.25s;
+  display: inline-flex; align-items: center; gap: 8px; border: none;
+}
+.btn-primary { background: var(--cyan); color: var(--bg); font-weight: 700; }
+.btn-primary:hover { background: #33d4ff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,200,255,0.3); }
+.btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(232,244,255,0.22); }
+.btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+/* ══════════ SECTION HEADERS ══════════ */
+.section-tag {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+  color: var(--cyan); text-transform: uppercase;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+}
+.section-tag::before { content: '//'; opacity: 0.5; }
+h2.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px,3.5vw,48px);
+  font-weight: 800; letter-spacing: -1px;
+  color: var(--white); margin-bottom: 44px; line-height: 1.1;
+}
+h2.section-title span { color: var(--cyan); }
+
+/* ══════════ SOBRE ══════════ */
+.sobre-grid { display: grid; grid-template-columns: 1fr 320px; gap: 56px; align-items: start; }
+.sobre-text p { color: rgba(232,244,255,0.72); font-size: 15px; line-height: 1.85; margin-bottom: 18px; }
+.sobre-text strong { color: var(--white); font-weight: 600; }
+.info-card { background: var(--card); border: 1px solid var(--border); padding: 26px; }
+.info-card-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: var(--cyan); text-transform: uppercase; margin-bottom: 18px; }
+.info-item { display: flex; flex-direction: column; gap: 2px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+.info-item:last-child { border-bottom: none; padding-bottom: 0; }
+.info-key { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
+.info-val { font-size: 13px; color: var(--white); }
+
+/* ══════════ STACK (now below sobre) ══════════ */
+#stack { min-height: unset; padding-top: 60px; padding-bottom: 60px; }
+.stack-section { margin-bottom: 28px; }
+.stack-section-title {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px;
+  color: var(--cyan); text-transform: uppercase; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.stack-section-title::before { content: '▸'; font-size: 8px; }
+.stack-badges { display: flex; flex-wrap: wrap; gap: 7px; }
+.stack-badge {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.5px;
+  padding: 5px 12px; border: 1px solid var(--border);
+  color: rgba(232,244,255,0.65); background: rgba(7,18,38,0.55);
+  transition: all 0.2s; cursor: default;
+}
+.stack-badge:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,200,255,0.06); }
+
+/* ══════════ EXPERIÊNCIA ══════════ */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+  width: 1px; background: var(--border);
+}
+.timeline-item { position: relative; margin-bottom: 44px; }
+.timeline-item::before {
+  content: ''; position: absolute; left: -32px; top: 6px;
+  width: 8px; height: 8px; background: var(--cyan); border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,200,255,0.5);
+}
+.timeline-role {
+  font-family: var(--font-display); font-size: 18px; font-weight: 700;
+  color: var(--white); margin-bottom: 4px; line-height: 1.2;
+}
+.timeline-company {
+  font-size: 13px; color: var(--cyan); font-weight: 500; margin-bottom: 4px;
+}
+.timeline-period { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+.timeline-desc { color: rgba(232,244,255,0.62); font-size: 13px; line-height: 1.75; max-width: 660px; margin-bottom: 12px; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.8px; padding: 3px 9px; border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; }
+
+/* ══════════ PROJETOS ══════════ */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+.project-card {
+  background: var(--card); border: 1px solid var(--border);
+  padding: 22px; transition: all 0.25s; position: relative; overflow: hidden;
+}
+.project-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.project-card:hover { border-color: rgba(0,200,255,0.4); transform: translateY(-3px); box-shadow: 0 10px 36px rgba(0,0,0,0.4); }
+.project-card:hover::before { opacity: 1; }
+.project-cat { font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px; color: var(--cyan); text-transform: uppercase; margin-bottom: 9px; opacity: 0.8; }
+.project-name { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 9px; }
+.project-desc { font-size: 13px; color: rgba(232,244,255,0.52); line-height: 1.7; margin-bottom: 14px; }
+.project-link { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; color: var(--cyan); text-decoration: none; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+.project-link:hover { gap: 10px; }
+
+/* ══════════ TIMELINE ACADÊMICA ══════════ */
+#academico { background: var(--bg2); }
+.acad-year { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--cyan); margin-bottom: 16px; margin-top: 36px; }
+.acad-year:first-of-type { margin-top: 0; }
+.acad-item { padding: 18px 22px; border: 1px solid var(--border); margin-bottom: 10px; background: var(--card); transition: border-color 0.2s; }
+.acad-item:hover { border-color: rgba(0,200,255,0.35); }
+.acad-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; line-height: 1.35; }
+.acad-venue { font-size: 12px; color: var(--cyan); margin-bottom: 8px; }
+.acad-desc { font-size: 12px; color: rgba(232,244,255,0.55); line-height: 1.65; margin-bottom: 10px; }
+
+/* ══════════ CERTIFICAÇÕES ══════════ */
+.certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+.cert-card { background: var(--card); border: 1px solid var(--border); padding: 18px 20px; transition: border-color 0.2s; }
+.cert-card:hover { border-color: rgba(0,200,255,0.35); }
+.cert-issuer { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1.5px; color: var(--cyan); text-transform: uppercase; margin-bottom: 5px; opacity: 0.85; }
+.cert-name { font-size: 13px; font-weight: 600; color: var(--white); line-height: 1.4; margin-bottom: 4px; }
+.cert-meta { font-family: var(--font-mono); font-size: 9px; color: var(--muted); }
+
+/* ══════════ CONTATO ══════════ */
+#contato { align-items: center; text-align: center; }
+#contato h2.section-title { margin-bottom: 14px; }
+.contato-sub { color: rgba(232,244,255,0.52); max-width: 460px; margin: 0 auto 40px; font-size: 14px; }
+.contact-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+.contact-link { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; padding: 9px 20px; border: 1px solid var(--border); color: rgba(232,244,255,0.65); text-decoration: none; text-transform: uppercase; transition: all 0.2s; }
+.contact-link:hover { border-color: var(--cyan); color: var(--cyan); }
+.contact-form { display: grid; gap: 13px; max-width: 520px; width: 100%; text-align: left; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+.form-field { display: flex; flex-direction: column; gap: 5px; }
+.form-field label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; }
+.form-field input, .form-field textarea {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--white); font-family: var(--font-body); font-size: 14px;
+  padding: 10px 13px; outline: none; transition: border-color 0.2s; resize: none;
+}
+.form-field input:focus, .form-field textarea:focus { border-color: var(--cyan); }
+.form-field input::placeholder, .form-field textarea::placeholder { color: var(--muted); font-size: 13px; }
+
+/* ══════════ ANIMATIONS ══════════ */
+@keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+.fade-up { opacity:0; animation: fadeUp 0.65s ease forwards; }
+.d1{animation-delay:.08s} .d2{animation-delay:.2s} .d3{animation-delay:.35s} .d4{animation-delay:.5s} .d5{animation-delay:.65s}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.cursor-blink { display:inline-block; color:var(--cyan); animation: blink 1s step-end infinite; }
+
+/* scrollbar */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--cyan2)}
+
+/* ══════════ OVERLAY MOBILE ══════════ */
+#sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 99;
+  backdrop-filter: blur(2px);
+}
+#sidebar-overlay.active { display: block; }
+
+/* ══════════ MOBILE ══════════ */
+@media(max-width:900px){
+  :root{--nav-w:0px}
+  #sidebar{
+    transform:translateX(-230px);
+    transition:transform .3s ease;
+    z-index:100;
+  }
+  #sidebar.open{transform:translateX(0)}
+  .hamburger{
+    display:flex;
+    position:fixed;top:14px;left:14px;
+    z-index:300;
+    flex-direction:column;gap:5px;
+    cursor:pointer;padding:8px;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .hamburger span{display:block;width:20px;height:1.5px;background:var(--cyan)}
+  main{margin-left:0}
+  section{padding:60px 20px 50px}
+  .sobre-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  h1.hero-name{font-size:38px;letter-spacing:-1px}
+  .hero-title{font-size:15px}
+  .hero-desc{font-size:14px}
+  .badge-row{gap:6px}
+  .badge{font-size:9px;padding:4px 10px}
+  .projects-grid{grid-template-columns:1fr}
+  .certs-grid{grid-template-columns:1fr}
+  .stack-section > div[style]{grid-template-columns:1fr !important}
+  h2.section-title{font-size:28px}
+  .lang-switch{top:14px;right:12px}
+  .lang-btn{font-size:8px;padding:4px 7px}
+  .stats-row{gap:20px}
+  .acad-year{font-size:22px}
+}
+@media(min-width:901px){.hamburger{display:none}}
+
+/* i18n */
+[data-lang]{display:none}[data-lang].active{display:inline}
+</style>
+</head>
+<body>
+
+<button class="hamburger" onclick="toggleSidebar()" aria-label="Menu"><span></span><span></span><span></span></button>
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<div class="lang-switch">
+  <button class="lang-btn active" onclick="setLang('pt')">PT-BR</button>
+  <button class="lang-btn" onclick="setLang('en')">EN-US</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+</div>
+
+<aside id="sidebar">
+  <div class="sidebar-brand">
+    <img class="sidebar-photo" src="data:image/jpeg;base64,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" alt="Marco Aurélio"/>
+    <div class="sidebar-name">Marco Aurélio</div>
+    <div class="sidebar-role">
+      <span data-lang="pt" class="active">Analista de Dados</span>
+      <span data-lang="en">Data Analyst</span>
+      <span data-lang="es">Analista de Datos</span>
+    </div>
+  </div>
+  <nav>
+    <a class="nav-item active" href="#inicio" onclick="setActive(this)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      <span data-lang="pt" class="active">Início</span><span data-lang="en">Home</span><span data-lang="es">Inicio</span>
+    </a>
+    <a class="nav-item" href="#sobre" onclick="setActive(this)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <span data-lang="pt" class="active">Sobre</span><span data-lang="en">About</span><span data-lang="es">Sobre mí</span>
+    </a>
+    <a class="nav-item" href="#stack" onclick="setActive(this)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="4" rx="1"/><rect x="2" y="10" width="20" height="4" rx="1"/><rect x="2" y="17" width="20" height="4" rx="1"/></svg>
+      Stack
+    </a>
+    <a class="nav-item" href="#experiencia" onclick="setActive(this)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+      <span data-lang="pt" class="active">Experiência</span><span data-lang="en">Experience</span><span data-lang="es">Experiencia</span>
+    </a>
+    <a class="nav-item" href="#projetos" onclick="setActive(this)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      <span data-lang="pt" class="active">Projetos</span><span data-lang="en">Projects</span><span data-lang="es">Proyectos</span>
+    </a>
+    <a class="nav-item" href="#academico" onclick="setActive(this)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      <span data-lang="pt" class="active">Publicações</span><span data-lang="en">Publications</span><span data-lang="es">Publicaciones</span>
+    </a>
+    <a class="nav-item" href="#certificacoes" onclick="setActive(this)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+      <span data-lang="pt" class="active">Certificações</span><span data-lang="en">Certifications</span><span data-lang="es">Certificaciones</span>
+    </a>
+    <a class="nav-item" href="#contato" onclick="setActive(this)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><polyline points="22 6 12 13 2 6"/></svg>
+      <span data-lang="pt" class="active">Contato</span><span data-lang="en">Contact</span><span data-lang="es">Contacto</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="mailto:marco.dev.data@gmail.com" title="Email"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><polyline points="22 6 12 13 2 6"/></svg></a>
+    <a href="https://github.com/MarcoCostaSilva" target="_blank" title="GitHub"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg></a>
+    <a href="https://linkedin.com/in/marco-costadasilva" target="_blank" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    <a href="https://lattes.cnpq.br/8887305754672433" target="_blank" title="Lattes"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></a>
+  </div>
+</aside>
+
+<main>
+
+<!-- ══ INÍCIO ══ -->
+<section id="inicio">
+  <div class="hero-eyebrow fade-up d1">
+    <span data-lang="pt" class="active">Análise de Dados · Ciência de Dados · Estatística · Business Intelligence</span>
+    <span data-lang="en">Data Analysis · Data Science · Statistics · Business Intelligence</span>
+    <span data-lang="es">Análisis de Datos · Ciencia de Datos · Estadística · Business Intelligence</span>
+  </div>
+  <h1 class="hero-name fade-up d2" id="typed-name">&nbsp;</h1>
+  <div class="hero-title fade-up d3">
+    <span data-lang="pt" class="active">Data Science &nbsp;·&nbsp; Estatística &nbsp;·&nbsp; Business Intelligence</span>
+    <span data-lang="en">Data Science &nbsp;·&nbsp; Statistics &nbsp;·&nbsp; Business Intelligence</span>
+    <span data-lang="es">Data Science &nbsp;·&nbsp; Estadística &nbsp;·&nbsp; Business Intelligence</span>
+  </div>
+  <p class="hero-desc fade-up d4">
+    <span data-lang="pt" class="active">Cientista de Dados e Estatístico com experiência em análise exploratória, modelagem preditiva, engenharia de dados e inteligência de negócios. Transformo dados em decisões estratégicas com Python, SQL, Power BI e modelos estatísticos avançados.</span>
+    <span data-lang="en">Data Scientist and Statistician with experience in exploratory analysis, predictive modeling, data engineering, and business intelligence. I transform data into strategic decisions with Python, SQL, Power BI, and advanced statistical models.</span>
+    <span data-lang="es">Científico de Datos y Estadístico con experiencia en análisis exploratorio, modelado predictivo, ingeniería de datos e inteligencia de negocio. Transformo datos en decisiones estratégicas con Python, SQL, Power BI y modelos estadísticos avanzados.</span>
+  </p>
+  <div class="badge-row fade-up d4">
+    <span class="badge hl">Azure</span>
+    <span class="badge">ETL</span>
+    <span class="badge">Estatística</span>
+    <span class="badge">Looker Studio</span>
+    <span class="badge">Pandas</span>
+    <span class="badge hl">Power BI</span>
+    <span class="badge hl">Python</span>
+    <span class="badge">Scikit-learn</span>
+    <span class="badge">SPSS</span>
+    <span class="badge hl">SQL</span>
+  </div>
+  <div class="hero-actions fade-up d5">
+    <a href="#projetos" class="btn btn-primary">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/></svg>
+      <span data-lang="pt" class="active">Ver Projetos</span><span data-lang="en">View Projects</span><span data-lang="es">Ver Proyectos</span>
+    </a>
+    <a href="#contato" class="btn btn-outline">
+      <span data-lang="pt" class="active">Entrar em Contato</span><span data-lang="en">Get in Touch</span><span data-lang="es">Contactar</span>
+    </a>
+  </div>
+</section>
+
+<!-- ══ SOBRE ══ -->
+<section id="sobre">
+  <div class="section-tag"><span data-lang="pt" class="active">Sobre Mim</span><span data-lang="en">About Me</span><span data-lang="es">Sobre mí</span></div>
+  <h2 class="section-title"><span data-lang="pt" class="active">Quem sou <span>eu</span></span><span data-lang="en">Who <span>I am</span></span><span data-lang="es">Quién <span>soy</span></span></h2>
+  <div class="sobre-grid">
+    <div class="sobre-text">
+      <p>
+        <span data-lang="pt" class="active">Sou <strong>Cientista de Dados e Estatístico</strong> com formação multidisciplinar em Estatística, Ciência de Dados e Negócios Digitais. Atuo na intersecção entre análise estatística rigorosa, engenharia de dados e inteligência de negócios, transformando dados brutos em insights estratégicos acionáveis.</span>
+        <span data-lang="en">I'm a <strong>Data Scientist and Statistician</strong> with a multidisciplinary background in Statistics, Data Science, and Digital Business. I work at the intersection of rigorous statistical analysis, data engineering, and business intelligence, transforming raw data into actionable strategic insights.</span>
+        <span data-lang="es">Soy <strong>Científico de Datos y Estadístico</strong> con formación multidisciplinar en Estadística, Ciencia de Datos y Negocios Digitales. Trabajo en la intersección entre análisis estadístico riguroso, ingeniería de datos e inteligencia de negocio.</span>
+      </p>
+      <p>
+        <span data-lang="pt" class="active">Com experiência sólida em <strong>Python (Pandas, Scikit-learn), SQL, Power BI e Looker Studio</strong>, desenvolvo pipelines ETL, modelos preditivos, análises de sobrevivência, estudos de coorte e dashboards executivos. Tenho publicações científicas em congressos nacionais nas áreas de estatística aplicada à saúde e dados clínicos.</span>
+        <span data-lang="en">With solid experience in <strong>Python (Pandas, Scikit-learn), SQL, Power BI and Looker Studio</strong>, I develop ETL pipelines, predictive models, survival analyses, cohort studies, and executive dashboards. I have scientific publications in national conferences in applied statistics and clinical data areas.</span>
+        <span data-lang="es">Con sólida experiencia en <strong>Python (Pandas, Scikit-learn), SQL, Power BI y Looker Studio</strong>, desarrollo pipelines ETL, modelos predictivos, análisis de supervivencia, estudios de cohorte y dashboards ejecutivos.</span>
+      </p>
+      <p>
+        <span data-lang="pt" class="active">Minha trajetória une <strong>rigor científico, domínio técnico e visão de negócios</strong> — tendo atuado tanto em pesquisa acadêmica (UFSCAR, USP, UNISO) quanto em ambientes corporativos com foco em eficiência operacional, KPIs e governança de dados.</span>
+        <span data-lang="en">My trajectory combines <strong>scientific rigor, technical mastery, and business acumen</strong> — having worked both in academic research (UFSCAR, USP, UNISO) and corporate environments focused on operational efficiency, KPIs, and data governance.</span>
+        <span data-lang="es">Mi trayectoria combina <strong>rigor científico, dominio técnico y visión de negocio</strong> — habiendo trabajado tanto en investigación académica (UFSCAR, USP, UNISO) como en entornos corporativos enfocados en eficiencia operacional, KPIs y gobernanza de datos.</span>
+      </p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">// Info</div>
+      <div class="info-item"><span class="info-key"><span data-lang="pt" class="active">Localização</span><span data-lang="en">Location</span><span data-lang="es">Ubicación</span></span><span class="info-val">Brasil — SP</span></div>
+      <div class="info-item"><span class="info-key">Email</span><span class="info-val">marco.dev.data@gmail.com</span></div>
+      <div class="info-item"><span class="info-key">GitHub</span><span class="info-val">MarcoCostaSilva</span></div>
+      <div class="info-item"><span class="info-key">LinkedIn</span><span class="info-val">marco-costadasilva</span></div>
+      <div class="info-item"><span class="info-key"><span data-lang="pt" class="active">Formação</span><span data-lang="en">Education</span><span data-lang="es">Formación</span></span><span class="info-val">Estatística · Ciência de Dados · Negócios Digitais</span></div>
+      <div class="info-item"><span class="info-key"><span data-lang="pt" class="active">Pesquisa</span><span data-lang="en">Research</span><span data-lang="es">Investigación</span></span><span class="info-val">UFSCAR · USP · UNISO · CNPq</span></div>
+      <div class="info-item"><span class="info-key">Lattes</span><span class="info-val"><a href="https://lattes.cnpq.br/8887305754672433" target="_blank" style="color:var(--cyan);text-decoration:none">Ver currículo ↗</a></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STACK (logo abaixo do sobre) ══ -->
+<section id="stack">
+  <div class="section-tag"><span data-lang="pt" class="active">Tecnologias</span><span data-lang="en">Technologies</span><span data-lang="es">Tecnologías</span></div>
+  <h2 class="section-title" style="margin-bottom:32px">Stack</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 48px;">
+    <div>
+      <div class="stack-section">
+        <div class="stack-section-title"><span data-lang="pt" class="active">Análise &amp; Ciência de Dados</span><span data-lang="en">Analytics &amp; Data Science</span><span data-lang="es">Análisis &amp; Ciencia de Datos</span></div>
+        <div class="stack-badges"><span class="stack-badge">Jupyter</span><span class="stack-badge">NumPy</span><span class="stack-badge">Pandas</span><span class="stack-badge">PySpark</span><span class="stack-badge">Python</span><span class="stack-badge">Scikit-learn</span><span class="stack-badge">StatsModels</span><span class="stack-badge">Streamlit</span></div>
+      </div>
+      <div class="stack-section">
+        <div class="stack-section-title"><span data-lang="pt" class="active">Estatística &amp; Modelagem</span><span data-lang="en">Statistics &amp; Modeling</span><span data-lang="es">Estadística &amp; Modelado</span></div>
+        <div class="stack-badges"><span class="stack-badge">Análise Multivariada</span><span class="stack-badge">Kaplan-Meier</span><span class="stack-badge">Regressão Cox</span><span class="stack-badge">SPSS</span><span class="stack-badge">STATA</span></div>
+      </div>
+      <div class="stack-section">
+        <div class="stack-section-title">Business Intelligence</div>
+        <div class="stack-badges"><span class="stack-badge">Dashboards</span><span class="stack-badge">KPIs</span><span class="stack-badge">Looker Studio</span><span class="stack-badge">Power BI</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="stack-section">
+        <div class="stack-section-title"><span data-lang="pt" class="active">Bancos de Dados &amp; ETL</span><span data-lang="en">Databases &amp; ETL</span><span data-lang="es">Bases de Datos &amp; ETL</span></div>
+        <div class="stack-badges"><span class="stack-badge">Modelagem Relacional</span><span class="stack-badge">MySQL</span><span class="stack-badge">Pipelines ETL</span><span class="stack-badge">PostgreSQL</span><span class="stack-badge">SQL</span><span class="stack-badge">SQL Server</span></div>
+      </div>
+      <div class="stack-section">
+        <div class="stack-section-title"><span data-lang="pt" class="active">Cloud &amp; Ferramentas</span><span data-lang="en">Cloud &amp; Tools</span><span data-lang="es">Cloud &amp; Herramientas</span></div>
+        <div class="stack-badges"><span class="stack-badge">APIs REST</span><span class="stack-badge">Azure</span><span class="stack-badge">Git</span><span class="stack-badge">GitHub</span><span class="stack-badge">VS Code</span></div>
+      </div>
+      <div class="stack-section">
+        <div class="stack-section-title">Backend</div>
+        <div class="stack-badges"><span class="stack-badge">.NET</span><span class="stack-badge">C#</span><span class="stack-badge">FastAPI</span><span class="stack-badge">JavaScript</span><span class="stack-badge">Node.js</span><span class="stack-badge">React</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXPERIÊNCIA ══ -->
+<section id="experiencia">
+  <div class="section-tag"><span data-lang="pt" class="active">Carreira</span><span data-lang="en">Career</span><span data-lang="es">Carrera</span></div>
+  <h2 class="section-title"><span data-lang="pt" class="active"><span>Experiência</span> Profissional</span><span data-lang="en">Professional <span>Experience</span></span><span data-lang="es"><span>Experiencia</span> Profesional</span></h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-role">Residente em Desenvolvimento Full Stack, BD &amp; Engenharia de Dados</div>
+      <div class="timeline-company">I9+ Baterias Elétricas</div>
+      <div class="timeline-period">Fev/2024 – Dez/2025</div>
+      <div class="timeline-desc">Desenvolvimento de pipelines de dados (ETL) para ingestão, transformação e disponibilização de dados. Construção de consultas SQL e scripts Python para análise e suporte a decisões operacionais e estratégicas. Modelagem relacional, integração via APIs, criação de KPIs e dashboards de performance. Governança de dados e atuação em ambiente colaborativo com stakeholders técnicos e de negócio.</div>
+      <div class="tag-row"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">ETL</span><span class="tag">Power BI</span><span class="tag">APIs</span><span class="tag">KPIs</span><span class="tag">Azure</span><span class="tag">Pandas</span><span class="tag">.NET / C#</span><span class="tag">FastAPI</span></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-role">Estagiário em Tecnologia</div>
+      <div class="timeline-company">Pclin — Clínica de Saúde Multiprofissional</div>
+      <div class="timeline-period">Jan/2024 – Jan/2025</div>
+      <div class="timeline-desc">Modelagem e manutenção de bancos de dados relacionais. Desenvolvimento de consultas SQL para análise e suporte a rotinas operacionais. Automação de processos e integração de sistemas via APIs. Construção de relatórios gerenciais, indicadores de desempenho (KPIs) e análise de dados aplicada à melhoria de processos internos.</div>
+      <div class="tag-row"><span class="tag">SQL</span><span class="tag">APIs</span><span class="tag">KPIs</span><span class="tag">Banco de Dados Relacional</span><span class="tag">Python</span><span class="tag">Relatórios</span></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-role">Gestor e Responsável Técnico — Nutrição</div>
+      <div class="timeline-company">Instituto de Nefrologia e Diálise de Itapetininga (INDI)</div>
+      <div class="timeline-period">Abr/2018 – Nov/2023</div>
+      <div class="timeline-desc">Análise de dados clínicos e operacionais para suporte à tomada de decisão gerencial. Desenvolvimento e monitoramento de KPIs institucionais, melhoria de processos e organização de fluxos operacionais. Interface multidisciplinar para alinhamento estratégico e geração de valor ao negócio. Período com produção científica intensa — mais de 10 publicações em congressos nacionais de nefrologia e geriatria.</div>
+      <div class="tag-row"><span class="tag">KPIs</span><span class="tag">SPSS</span><span class="tag">STATA</span><span class="tag">Excel Avançado</span><span class="tag">Análise Clínica</span><span class="tag">Gestão de Processos</span><span class="tag">Pesquisa Científica</span></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-role">Nutricionista Clínico — Especialista em Doenças Renais</div>
+      <div class="timeline-company">Instituto de Hemodiálise de Sorocaba (IHS)</div>
+      <div class="timeline-period">Abr/2021 – Jul/2021</div>
+      <div class="timeline-desc">Atuação especializada em nutrição renal com análise de dados clínicos e indicadores de desempenho nutricional de pacientes em hemodiálise. Uso de ferramentas Office para registro e análise de dados.</div>
+      <div class="tag-row"><span class="tag">Excel</span><span class="tag">Dados Clínicos</span><span class="tag">KPIs</span><span class="tag">Office</span></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-role">Nutricionista Clínico Hospitalar</div>
+      <div class="timeline-company">Hospital Unimed Sul Paulista</div>
+      <div class="timeline-period">Jan/2017 – Set/2017</div>
+      <div class="timeline-desc">Atuação clínica hospitalar com suporte analítico — uso de planilhas Excel para controle e acompanhamento de indicadores clínicos e nutricionais de pacientes internados.</div>
+      <div class="tag-row"><span class="tag">Excel</span><span class="tag">Indicadores Clínicos</span><span class="tag">Análise de Dados</span></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-role">Aluno Pesquisador — Iniciação Científica</div>
+      <div class="timeline-company">Universidade de Sorocaba (UNISO)</div>
+      <div class="timeline-period">Fev/2015 – Dez/2016</div>
+      <div class="timeline-desc">Desenvolvimento de pesquisas acadêmicas com coleta, organização e análise estatística de dados. Aplicação de softwares estatísticos (STATA e SPSS) para análises multivariadas e de coorte. Publicações em congressos científicos e mostras acadêmicas.</div>
+      <div class="tag-row"><span class="tag">STATA</span><span class="tag">SPSS</span><span class="tag">Excel</span><span class="tag">Estatística</span><span class="tag">Pesquisa Científica</span></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-role">Estagiário em Nutrição</div>
+      <div class="timeline-company">SESI Itapetininga</div>
+      <div class="timeline-period">Fev/2012 – Dez/2014</div>
+      <div class="timeline-desc">Suporte operacional com uso intensivo de ferramentas Microsoft Office, elaboração de planilhas Excel para controle e organização de dados, produção de relatórios e apresentações institucionais.</div>
+      <div class="tag-row"><span class="tag">Excel</span><span class="tag">Word</span><span class="tag">PowerPoint</span><span class="tag">Office</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PROJETOS ══ -->
+<section id="projetos">
+  <div class="section-tag"><span data-lang="pt" class="active">Repositórios</span><span data-lang="en">Repositories</span><span data-lang="es">Repositorios</span></div>
+  <h2 class="section-title"><span data-lang="pt" class="active"><span>Projetos</span></span><span data-lang="en"><span>Projects</span></span><span data-lang="es"><span>Proyectos</span></span></h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-cat">// Data Science · Statistics</div>
+      <div class="project-name">Survival Analysis with Kaplan-Meier &amp; Cox Regression</div>
+      <div class="project-desc"><span data-lang="pt" class="active">Análise de sobrevivência aplicada a dados de idosos — estudo das mudanças na composição corporal e seu impacto na probabilidade de sobrevivência. Modelos Kaplan-Meier e Regressão de Cox em Python.</span><span data-lang="en">Survival analysis applied to elderly data — studying body composition changes and their impact on survival probability. Kaplan-Meier and Cox Regression models in Python.</span><span data-lang="es">Análisis de supervivencia aplicado a datos de ancianos. Modelos Kaplan-Meier y Regresión de Cox en Python.</span></div>
+      <div class="tag-row" style="margin-bottom:14px"><span class="tag">Python</span><span class="tag">Estatística</span><span class="tag">Kaplan-Meier</span><span class="tag">Cox Regression</span></div>
+      <a href="https://github.com/MarcoCostaSilva/SurvivalAnalysis" target="_blank" class="project-link"><span data-lang="pt" class="active">Ver Repositório</span><span data-lang="en">View Repo</span><span data-lang="es">Ver Repo</span> →</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-cat">// Data Engineering · Research</div>
+      <div class="project-name">Electric Vehicles Data Platform — Brazil</div>
+      <div class="project-desc"><span data-lang="pt" class="active">Plataforma de análise de dados sobre veículos elétricos no Brasil com dados abertos do SENATRAN. ETL, análise estatística e visualização para estudos de mobilidade elétrica e tendências de mercado.</span><span data-lang="en">Data analysis platform on electric vehicles in Brazil with open SENATRAN data. ETL, statistical analysis and visualization for electric mobility studies.</span><span data-lang="es">Plataforma de análisis de datos sobre vehículos eléctricos en Brasil con datos abiertos del SENATRAN.</span></div>
+      <div class="tag-row" style="margin-bottom:14px"><span class="tag">Python</span><span class="tag">ETL</span><span class="tag">Analytics</span><span class="tag">SENATRAN</span></div>
+      <a href="https://github.com/MarcoCostaSilva/brazil-electric-vehicles-data-platform" target="_blank" class="project-link"><span data-lang="pt" class="active">Ver Repositório</span><span data-lang="en">View Repo</span><span data-lang="es">Ver Repo</span> →</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-cat">// Data Science · Analytics</div>
+      <div class="project-name">Movie Analytics — IMDB</div>
+      <div class="project-desc"><span data-lang="pt" class="active">Análise exploratória e modelagem preditiva sobre dados do IMDB. EDA completo, limpeza de dados, visualizações avançadas e insights sobre tendências do cinema mundial.</span><span data-lang="en">Exploratory analysis and predictive modeling on IMDB data. Complete EDA, data cleaning, advanced visualizations, and insights on global cinema trends.</span><span data-lang="es">Análisis exploratorio y modelado predictivo sobre datos del IMDB.</span></div>
+      <div class="tag-row" style="margin-bottom:14px"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">EDA</span><span class="tag">Jupyter</span></div>
+      <a href="https://github.com/MarcoCostaSilva/movie-analytics-imdb" target="_blank" class="project-link"><span data-lang="pt" class="active">Ver Repositório</span><span data-lang="en">View Repo</span><span data-lang="es">Ver Repo</span> →</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-cat">// Full Stack · Web App</div>
+      <div class="project-name">Agil Store — E-commerce Platform</div>
+      <div class="project-desc"><span data-lang="pt" class="active">Aplicação web de e-commerce desenvolvida em JavaScript com foco em arquitetura limpa, componentes reutilizáveis e experiência do usuário.</span><span data-lang="en">E-commerce web application developed in JavaScript with focus on clean architecture, reusable components, and user experience.</span><span data-lang="es">Aplicación web de e-commerce desarrollada en JavaScript con arquitectura limpia.</span></div>
+      <div class="tag-row" style="margin-bottom:14px"><span class="tag">JavaScript</span><span class="tag">HTML5</span><span class="tag">CSS3</span></div>
+      <a href="https://github.com/MarcoCostaSilva/Agil_Store" target="_blank" class="project-link"><span data-lang="pt" class="active">Ver Repositório</span><span data-lang="en">View Repo</span><span data-lang="es">Ver Repo</span> →</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-cat">// Startup · Health Tech</div>
+      <div class="project-name">Nutri Nefro — App de Autogestão Renal</div>
+      <div class="project-desc"><span data-lang="pt" class="active">Aplicativo de autogestão da doença renal crônica. Selecionado para a Aceleradora de Startups Amazonas Caps e Agile Think em parceria com a FMU (2024–2026).</span><span data-lang="en">Chronic kidney disease self-management app. Selected for the Amazonas Caps &amp; Agile Think Startup Accelerator in partnership with FMU (2024–2026).</span><span data-lang="es">App de autogestión de la enfermedad renal crónica. Seleccionado para la Aceleradora de Startups.</span></div>
+      <div class="tag-row" style="margin-bottom:14px"><span class="tag">Startup</span><span class="tag">Health Tech</span><span class="tag">FMU</span><span class="tag">Aceleradora</span></div>
+      <a href="https://github.com/MarcoCostaSilva" target="_blank" class="project-link"><span data-lang="pt" class="active">Ver GitHub</span><span data-lang="en">View GitHub</span><span data-lang="es">Ver GitHub</span> →</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-cat">// Startup · Geriatria</div>
+      <div class="project-name">Fragil Care — Rastreio da Síndrome da Fragilidade</div>
+      <div class="project-desc"><span data-lang="pt" class="active">App de rastreio e diagnóstico da Síndrome da Fragilidade em Idosos. Selecionado para o Santander Xplorer 2024 e Sebrae for Startups 2024.</span><span data-lang="en">App for screening and diagnosing Frailty Syndrome in the elderly. Selected for Santander Xplorer 2024 and Sebrae for Startups 2024.</span><span data-lang="es">App de rastreo y diagnóstico del Síndrome de Fragilidad en Ancianos. Seleccionado para Santander Xplorer 2024 y Sebrae for Startups 2024.</span></div>
+      <div class="tag-row" style="margin-bottom:14px"><span class="tag">Startup</span><span class="tag">Santander Xplorer</span><span class="tag">Sebrae</span><span class="tag">Geriatria</span></div>
+      <a href="https://github.com/MarcoCostaSilva" target="_blank" class="project-link"><span data-lang="pt" class="active">Ver GitHub</span><span data-lang="en">View GitHub</span><span data-lang="es">Ver GitHub</span> →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PUBLICAÇÕES CIENTÍFICAS & PROJETOS ACADÊMICOS ══ -->
+<section id="academico">
+  <div class="section-tag"><span data-lang="pt" class="active">Ciência &amp; Tecnologia</span><span data-lang="en">Science &amp; Tech</span><span data-lang="es">Ciencia &amp; Tecnología</span></div>
+  <h2 class="section-title"><span data-lang="pt" class="active"><span>Publicações</span> &amp; Projetos Acadêmicos</span><span data-lang="en">Academic <span>Publications</span> &amp; Projects</span><span data-lang="es"><span>Publicaciones</span> Académicas</span></h2>
+
+  <div class="acad-year">2026</div>
+  <div class="acad-item">
+    <div class="acad-title">Digital Checklist System for Safe Operation of Heavy &amp; Agricultural Machinery</div>
+    <div class="acad-venue">Divina Florestal</div>
+    <div class="acad-desc"><span data-lang="pt" class="active">Desenvolvimento de sistema digital de checklist para operação segura de máquinas pesadas e agrícolas — automatizando o registro de inspeções e gerando dados operacionais para análise de segurança.</span><span data-lang="en">Development of a digital checklist system for safe operation of heavy and agricultural machinery — automating inspection records and generating operational data for safety analysis.</span><span data-lang="es">Desarrollo de sistema digital de checklist para la operación segura de maquinaria pesada y agrícola.</span></div>
+    <div class="tag-row"><span class="tag">Sistemas Digitais</span><span class="tag">Dados Operacionais</span><span class="tag">Segurança</span></div>
+  </div>
+
+  <div class="acad-year">2025</div>
+  <div class="acad-item">
+    <div class="acad-title">Statistical Integration &amp; Analysis of Electric Vehicle Data in Brazil</div>
+    <div class="acad-venue">FMU &amp; SENATRAN</div>
+    <div class="acad-desc"><span data-lang="pt" class="active">Integração, limpeza e análise estatística de dados abertos sobre veículos elétricos no Brasil. ETL completo + modelagem estatística para identificação de tendências de mercado e mobilidade sustentável.</span><span data-lang="en">Integration, cleaning and statistical analysis of open data on electric vehicles in Brazil. Full ETL + statistical modeling for market trend identification.</span><span data-lang="es">Integración y análisis estadístico de datos abiertos sobre vehículos eléctricos en Brasil.</span></div>
+    <div class="tag-row"><span class="tag">Python</span><span class="tag">ETL</span><span class="tag">Estatística</span><span class="tag">SENATRAN</span><span class="tag">FMU</span></div>
+  </div>
+  <div class="acad-item">
+    <div class="acad-title">SOS Sorocaba Web System — React, Node.js &amp; Supabase</div>
+    <div class="acad-venue">ONG S.O.S Sorocaba</div>
+    <div class="acad-desc"><span data-lang="pt" class="active">Evolução do sistema web para gestão de pessoas em situação de vulnerabilidade social. Migração para stack moderna com React, Node.js e Supabase (PostgreSQL), com dashboard de dados e relatórios gerenciais.</span><span data-lang="en">Evolution of the web system for managing socially vulnerable individuals. Migration to modern stack with React, Node.js and Supabase (PostgreSQL), with data dashboard and management reports.</span><span data-lang="es">Evolución del sistema web para gestión de personas en situación de vulnerabilidad social con React, Node.js y Supabase.</span></div>
+    <div class="tag-row"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Supabase</span><span class="tag">PostgreSQL</span><span class="tag">Dashboard</span></div>
+  </div>
+
+  <div class="acad-year">2024 – 2026</div>
+  <div class="acad-item">
+    <div class="acad-title">Nutri Nefro — Chronic Kidney Disease Self-Management App</div>
+    <div class="acad-venue">Aceleradora Amazonas Caps &amp; Agile Think · FMU</div>
+    <div class="acad-desc"><span data-lang="pt" class="active">Startup de saúde selecionada para edital de aceleração. Aplicativo para autogestão da DRC com módulo de análise de dados clínicos e acompanhamento nutricional personalizado via algoritmos de recomendação.</span><span data-lang="en">Health startup selected for acceleration program. App for CKD self-management with clinical data analysis module and personalized nutritional monitoring via recommendation algorithms.</span><span data-lang="es">Startup de salud seleccionada para programa de aceleración. App para autogestión de la ERC.</span></div>
+    <div class="tag-row"><span class="tag">Startup</span><span class="tag">Health Data</span><span class="tag">Aceleradora</span><span class="tag">FMU</span></div>
+  </div>
+
+  <div class="acad-year">2023</div>
+  <div class="acad-item">
+    <div class="acad-title">Fragil Care — Frailty Syndrome Screening &amp; Diagnosis App</div>
+    <div class="acad-venue">Santander Xplorer 2024 · Sebrae for Startups 2024</div>
+    <div class="acad-desc"><span data-lang="pt" class="active">Aplicativo de rastreio da Síndrome da Fragilidade em idosos com modelo preditivo baseado em dados clínicos e biomarcadores. Selecionado para dois editais nacionais de inovação.</span><span data-lang="en">Frailty Syndrome screening app in elderly with predictive model based on clinical data and biomarkers. Selected for two national innovation programs.</span><span data-lang="es">App de rastreo del Síndrome de Fragilidad en ancianos con modelo predictivo basado en datos clínicos.</span></div>
+    <div class="tag-row"><span class="tag">ML Preditivo</span><span class="tag">Dados Clínicos</span><span class="tag">Santander Xplorer</span><span class="tag">Sebrae</span></div>
+  </div>
+
+  <div class="acad-year">2022</div>
+  <div class="acad-item">
+    <div class="acad-title">Survival Analysis with Kaplan-Meier &amp; Cox Regression (Python)</div>
+    <div class="acad-venue">GANEPÃO · XII Congresso de Geriatria e Gerontologia · UFSCAR &amp; INDI</div>
+    <div class="acad-desc"><span data-lang="pt" class="active">Análise estatística das mudanças relacionadas à idade na composição corporal e seu impacto na probabilidade de sobrevivência de idosos em hemodiálise. Modelos de sobrevivência com Python (Kaplan-Meier, Cox), análise de bioimpedância multifrequencial e parâmetros espectroscópicos.</span><span data-lang="en">Statistical analysis of age-related body composition changes and their impact on survival probability of elderly hemodialysis patients. Survival models with Python (Kaplan-Meier, Cox), multifrequency bioimpedance and spectroscopic parameter analysis.</span><span data-lang="es">Análisis estadístico de los cambios en la composición corporal relacionados con la edad y su impacto en la probabilidad de supervivencia.</span></div>
+    <div class="tag-row"><span class="tag">Python</span><span class="tag">Kaplan-Meier</span><span class="tag">Regressão Cox</span><span class="tag">Bioimpedância</span><span class="tag">UFSCAR</span><span class="tag">USP</span></div>
+  </div>
+
+  <div class="acad-year">2021</div>
+  <div class="acad-item">
+    <div class="acad-title">Nutritional Assessment &amp; Data Analysis in Hemodialysis (5 papers)</div>
+    <div class="acad-venue">Congresso Paulista de Nefrologia · UFSCAR, USP &amp; INDI</div>
+    <div class="acad-desc"><span data-lang="pt" class="active">5 publicações em análise de dados clínicos e nutricionais: estado nutricional, composição corporal por bioimpedância espectroscópica, hidratação, disfagia e suporte nutricional digital via aplicativo de mensagens em pacientes em hemodiálise e diálise peritoneal.</span><span data-lang="en">5 publications on clinical and nutritional data analysis: nutritional status, body composition by spectroscopic bioimpedance, hydration, dysphagia and digital nutritional support via messaging app in hemodialysis and peritoneal dialysis patients.</span><span data-lang="es">5 publicaciones en análisis de datos clínicos y nutricionales en pacientes en hemodiálisis.</span></div>
+    <div class="tag-row"><span class="tag">Análise de Dados Clínicos</span><span class="tag">Bioimpedância</span><span class="tag">SPSS</span><span class="tag">STATA</span><span class="tag">UFSCAR</span><span class="tag">USP</span></div>
+  </div>
+
+  <div class="acad-year">2018 – 2019</div>
+  <div class="acad-item">
+    <div class="acad-title">Albumin &amp; Hydration Status Correlation in Underweight Hemodialysis Patients</div>
+    <div class="acad-venue">NEFRO SUL 2019 · NEFRO USP 2018 · USP &amp; INDI</div>
+    <div class="acad-desc"><span data-lang="pt" class="active">Análise estatística da relação entre albumina plasmática, estado de hidratação, água extracelular, massa celular e ângulo de fase em pacientes com baixo peso submetidos à hemodiálise. Modelagem com SPSS/STATA e bioimpedância espectroscópica.</span><span data-lang="en">Statistical analysis of the relationship between plasma albumin, hydration status, extracellular water, cell mass and phase angle in underweight hemodialysis patients.</span><span data-lang="es">Análisis estadístico de la relación entre albúmina plasmática y estado de hidratación en pacientes en hemodiálisis.</span></div>
+    <div class="tag-row"><span class="tag">SPSS</span><span class="tag">STATA</span><span class="tag">Análise Estatística</span><span class="tag">USP</span><span class="tag">INDI</span></div>
+  </div>
+
+  <div class="acad-year">2015 – 2016</div>
+  <div class="acad-item">
+    <div class="acad-title">Academic Research Projects — Nutrition, Health Communication &amp; Statistics</div>
+    <div class="acad-venue">PreProSim · MAAC I &amp; II · EPIC UNISO · Universidade de Sorocaba (UNISO)</div>
+    <div class="acad-desc"><span data-lang="pt" class="active">Publicações acadêmicas em comunicação em saúde, educação alimentar e estatística aplicada. Uso de softwares estatísticos (STATA, SPSS) para análises de dados em estudos de coorte e revisões sistemáticas.</span><span data-lang="en">Academic publications in health communication, nutritional education and applied statistics. Use of statistical software (STATA, SPSS) for data analysis in cohort studies and systematic reviews.</span><span data-lang="es">Publicaciones académicas en comunicación en salud, educación alimentaria y estadística aplicada.</span></div>
+    <div class="tag-row"><span class="tag">STATA</span><span class="tag">SPSS</span><span class="tag">Estatística</span><span class="tag">UNISO</span><span class="tag">Pesquisa Científica</span></div>
+  </div>
+
+</section>
+
+<!-- ══ CERTIFICAÇÕES ══ -->
+<section id="certificacoes">
+  <div class="section-tag"><span data-lang="pt" class="active">Formação Contínua</span><span data-lang="en">Continuous Learning</span><span data-lang="es">Formación Continua</span></div>
+  <h2 class="section-title"><span data-lang="pt" class="active"><span>Certificações</span></span><span data-lang="en"><span>Certifications</span></span><span data-lang="es"><span>Certificaciones</span></span></h2>
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-issuer">Google · Coursera</div>
+      <div class="cert-name">Advanced Data Analytics Professional Certificate</div>
+      <div class="cert-meta">170h · 2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Google · Coursera</div>
+      <div class="cert-name">Business Intelligence Professional Certificate</div>
+      <div class="cert-meta">49h · 2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">USP</div>
+      <div class="cert-name">VIII Escola Avançada de Big Data Analysis</div>
+      <div class="cert-meta">32h · Jul/2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Alura</div>
+      <div class="cert-name">Google Looker Studio</div>
+      <div class="cert-meta">29h · Jan/2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">FAT</div>
+      <div class="cert-name">Computação em Nuvem — AZ-900 Fundamentals</div>
+      <div class="cert-meta">64h · Dez/2024</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">USP</div>
+      <div class="cert-name">Introdução à Ciência de Dados</div>
+      <div class="cert-meta">40h · Dez/2024</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Soul Code</div>
+      <div class="cert-name">Analista de Dados</div>
+      <div class="cert-meta">480h · Set/2024</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Alura</div>
+      <div class="cert-name">Python para Data Science</div>
+      <div class="cert-meta">69h · Ago/2024</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Alura</div>
+      <div class="cert-name">Power BI</div>
+      <div class="cert-meta">55h · Jul/2023</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Alura</div>
+      <div class="cert-name">Business Agility</div>
+      <div class="cert-meta">57h · Ago/2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTATO ══ -->
+<section id="contato">
+  <div class="section-tag">Contato</div>
+  <h2 class="section-title"><span data-lang="pt" class="active">Vamos <span>conversar</span></span><span data-lang="en">Let's <span>connect</span></span><span data-lang="es">Vamos a <span>conversar</span></span></h2>
+  <p class="contato-sub">
+    <span data-lang="pt" class="active">Aberto a oportunidades em Data Science, Analytics, Engenharia de Dados e Business Intelligence. Também disponível para projetos freelance, pesquisa e colaborações.</span>
+    <span data-lang="en">Open to opportunities in Data Science, Analytics, Data Engineering, and Business Intelligence. Also available for freelance projects, research, and collaborations.</span>
+    <span data-lang="es">Abierto a oportunidades en Data Science, Analytics, Ingeniería de Datos y Business Intelligence.</span>
+  </p>
+  <div class="contact-links">
+    <a href="https://linkedin.com/in/marco-costadasilva" target="_blank" class="contact-link">LinkedIn</a>
+    <a href="https://github.com/MarcoCostaSilva" target="_blank" class="contact-link">GitHub</a>
+    <a href="mailto:marco.dev.data@gmail.com" class="contact-link">Email</a>
+    <a href="https://lattes.cnpq.br/8887305754672433" target="_blank" class="contact-link">Lattes / CNPq</a>
+  </div>
+  <form class="contact-form" onsubmit="submitForm(event)">
+    <div class="form-row">
+      <div class="form-field"><label><span data-lang="pt" class="active">Nome</span><span data-lang="en">Name</span><span data-lang="es">Nombre</span></label><input type="text" id="fname" placeholder="Seu nome"/></div>
+      <div class="form-field"><label>Email</label><input type="email" id="femail" placeholder="seu@email.com"/></div>
+    </div>
+    <div class="form-field"><label><span data-lang="pt" class="active">Assunto</span><span data-lang="en">Subject</span><span data-lang="es">Asunto</span></label><input type="text" id="fsubject" placeholder="Oportunidade · Projeto · Colaboração"/></div>
+    <div class="form-field"><label><span data-lang="pt" class="active">Mensagem</span><span data-lang="en">Message</span><span data-lang="es">Mensaje</span></label><textarea rows="5" id="fmessage" placeholder="Sua mensagem..."></textarea></div>
+    <button type="submit" class="btn btn-primary" style="align-self:flex-start">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <span data-lang="pt" class="active">Enviar Mensagem</span><span data-lang="en">Send Message</span><span data-lang="es">Enviar Mensaje</span>
+    </button>
+    <p id="form-msg" style="font-family:var(--font-mono);font-size:11px;color:var(--cyan);display:none;margin-top:8px;"></p>
+  </form>
+</section>
+
+</main>
+
+<script>
+// ═══ TYPEWRITER ═══
+const fullName = 'Marco Aurélio';
+let typed = '';
+let idx = 0;
+const el = document.getElementById('typed-name');
+function typeNext() {
+  if (idx <= fullName.length) {
+    typed = fullName.slice(0, idx);
+    el.innerHTML = typed + '<span class="typed-cursor">|</span>';
+    idx++;
+    setTimeout(typeNext, idx === 1 ? 600 : 80 + Math.random() * 40);
+  }
+}
+window.addEventListener('load', () => setTimeout(typeNext, 400));
+
+// ═══ LANG ═══
+let currentLang = 'pt';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.textContent.toLowerCase().startsWith(lang)));
+}
+
+// ═══ NAV ═══
+function setActive(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); }
+const sections = document.querySelectorAll('section[id]');
+const navItems = document.querySelectorAll('.nav-item');
+new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + e.target.id)); });
+}, { threshold: 0.25 }).observe !== undefined && (() => {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + e.target.id)); });
+  }, { threshold: 0.25 });
+  sections.forEach(s => obs.observe(s));
+})();
+
+// ═══ MOBILE ═══
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('active');
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+// Close sidebar when a nav link is clicked on mobile
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    if (window.innerWidth <= 900) closeSidebar();
+  });
+});
+
+// ═══ FORM ═══
+function submitForm(e) {
+  e.preventDefault();
+  const msgs = { pt: '✓ Mensagem enviada! Entrarei em contato em breve.', en: '✓ Message sent! I will get back to you soon.', es: '✓ ¡Mensaje enviado! Me pondré en contacto pronto.' };
+  const msg = document.getElementById('form-msg');
+  msg.textContent = msgs[currentLang] || msgs.pt;
+  msg.style.display = 'block';
+}
+</script>
+</body>
+</html>
